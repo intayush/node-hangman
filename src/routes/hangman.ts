@@ -48,7 +48,7 @@ router.get(
         incorrectLetters,
       });
     } catch (error) {
-      console.error(error);
+      console.log(error);
       if (error === "Player not found") {
         res.status(404).send({
           message: "Player not found",

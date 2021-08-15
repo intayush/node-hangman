@@ -5,6 +5,13 @@
   "license": "MIT",
   "devDependencies": {
     "@types/axios": "^0.14.0",
+    "@types/jest": "^27.0.1",
+    "@types/supertest": "^2.0.11",
+    "babel-jest": "^27.0.6",
+    "jest": "^27.0.6",
+    "mongodb-memory-server": "^7.3.6",
+    "supertest": "^6.1.5",
+    "ts-jest": "^27.0.4",
     "typescript": "^4.3.5"
   },
   "dependencies": {
@@ -21,6 +28,7 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "start": "ts-node-dev src/index.ts"
+    "start": "ts-node-dev src/index.ts",
+    "test": "jest --testEnvironment=node ./src/tests --watch --testTimeout=10000  --maxWorkers=1"
   }
 }
