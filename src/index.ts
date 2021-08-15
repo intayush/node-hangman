@@ -7,12 +7,39 @@ import hangmanRouter from "./routes/hangman";
 
 dotenv.config();
 
-const DB_HOSTNAME = process.env.DB_HOSTNAME ?? "localhost";
-const DB_PORT = process.env.DB_PORT ?? "27017";
+const {
+  LOCAL_DB_HOSTNAME,
+  LOCAL_DB_PORT,
+  REMOTE_DB,
+  REMOTE_DB_HOSTNAME,
+  REMOTE_DB_USERNAME,
+  REMOTE_DB_PASSWORD,
+  DB_NAME,
+} = process.env;
 
-//`mongodb://${DB_HOSTNAME}:${DB_PORT}/hangman`,
+const connectionString = REMOTE_DB
+  ? `mongodb+srv://${REMOTE_DB_USERNAME ?? "hangman"}:${
+      REMOTE_DB_PASSWORD ?? "Demo@123"
+    }@${REMOTE_DB_HOSTNAME ?? "cluster0.kcnpb.mongodb.net"}/${
+      DB_NAME ?? "hangman"
+    }?retryWrites=true&w=majority`
+  : `mongodb://${LOCAL_DB_HOSTNAME ?? "localhost"}:${
+      LOCAL_DB_PORT ?? "27017"
+    }/${DB_NAME ?? "hangman"}`;
+
+console.log(
+  LOCAL_DB_HOSTNAME,
+  LOCAL_DB_PORT,
+  REMOTE_DB,
+  REMOTE_DB_HOSTNAME,
+  REMOTE_DB_USERNAME,
+  REMOTE_DB_PASSWORD,
+  DB_NAME
+);
+console.log(connectionString);
+
 mongoose.connect(
-  "mongodb+srv://hangman:Demo@123@cluster0.kcnpb.mongodb.net/hangman?retryWrites=true&w=majority",
+  connectionString,
   {
     useCreateIndex: true,
     useNewUrlParser: true,
