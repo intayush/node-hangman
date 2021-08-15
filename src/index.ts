@@ -55,6 +55,6 @@ const app = express();
 app.use(json());
 app.use(hangmanRouter);
 
-app.listen(8000, () => {
+app.listen(process.env.PORT || 8000, () => {
   console.log("Hangman Server is listening");
 });
