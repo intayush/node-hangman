@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import mongoose from "mongoose";
 import { json } from "body-parser";
 import * as dotenv from "dotenv";
@@ -27,17 +28,6 @@ const connectionString = REMOTE_DB
       LOCAL_DB_PORT ?? "27017"
     }/${DB_NAME ?? "hangman"}`;
 
-console.log(
-  LOCAL_DB_HOSTNAME,
-  LOCAL_DB_PORT,
-  REMOTE_DB,
-  REMOTE_DB_HOSTNAME,
-  REMOTE_DB_USERNAME,
-  REMOTE_DB_PASSWORD,
-  DB_NAME
-);
-console.log(connectionString);
-
 mongoose.connect(
   connectionString,
   {
@@ -53,7 +43,14 @@ mongoose.connect(
 
 const app = express();
 app.use(json());
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, '../build')));
+
 app.use(hangmanRouter);
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+});
 
 app.listen(process.env.PORT || 8000, () => {
   console.log("Hangman Server is listening");

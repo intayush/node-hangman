@@ -45,7 +45,7 @@ router.get(
         sessionId,
         wordArray,
         movesCount,
-        incorrectLetters
+        incorrectLetters,
       });
     } catch (error) {
       console.error(error);
@@ -53,10 +53,11 @@ router.get(
         res.status(404).send({
           message: "Player not found",
         });
+      } else {
+        res.status(500).send({
+          message: "Internal Server Error",
+        });
       }
-      res.status(500).send({
-        message: "Internal Server Error",
-      });
     }
   }
 );
